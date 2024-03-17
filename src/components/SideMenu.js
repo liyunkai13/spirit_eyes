@@ -1,45 +1,50 @@
 import {
-    AppstoreOutlined,
+    // AppstoreOutlined,
     ContainerOutlined,
-    DesktopOutlined,
-    MailOutlined,
+    // DesktopOutlined,
+    // MailOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    PieChartOutlined,
+    // PieChartOutlined,
 } from '@ant-design/icons';
 import { Button, Menu } from 'antd';
 import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
-function getItem(label, key, icon, children, type) {
-    return {
-        key,
-        icon,
-        children,
-        label,
-        type,
-    };
-}
-const items = [
-    getItem('Option 1', '1', <PieChartOutlined />),
-    getItem('Option 2', '2', <DesktopOutlined />),
-    getItem('Option 3', '3', <ContainerOutlined />),
-    getItem('Navigation One', 'sub1', <MailOutlined />, [
-        getItem('Option 5', '5'),
-        getItem('Option 6', '6'),
-        getItem('Option 7', '7'),
-        getItem('Option 8', '8'),
-    ]),
-    getItem('Navigation Two', 'sub2', <AppstoreOutlined />, [
-        getItem('Option 9', '9'),
-        getItem('Option 10', '10'),
-        getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
-    ]),
-];
-export function SideMenu() {
+
+export const SideMenu= () => {
+
     const [collapsed, setCollapsed] = useState(false);
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
     };
+    //从redux中获取数据
+    const wards = useSelector((state) => state.wards.value);
+    //从redux中获取dispatch方法
+    const dispatch = useDispatch();
+
+    const getItem = (label, key, icon, children, type) => {
+        return {
+            key,
+            icon,
+            children,
+            label,
+            type,
+        };
+    }
+    const items = wards.map((ward) => {
+        return getItem(ward.name, ward.id, <ContainerOutlined />, null, "ward");
+    });
+
+    const addWard = () => {
+        //点击唤起表单，填写信息
+        //点击确定后，将信息保存到redux中
+        dispatch({
+            type: 'wards/addWard',
+            payload: {id: wards.length + 1, name: `${wards.length + 1}号病房`, type: "病房", status: "空闲", }
+        });
+
+    }
   return (
       <div
           style={{
@@ -63,9 +68,10 @@ export function SideMenu() {
               inlineCollapsed={collapsed}
               items={items}
           />
-          <Button type="primary" style={{
+          <Button type="primary" onClick={addWard} style={{
               bottom: "0vh",
-          }}>
+          }}
+          >
               添加分组
           </Button>
       </div>
