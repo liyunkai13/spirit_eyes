@@ -22,6 +22,16 @@ const WardsService = {
         }
     }
 };
-export default WardsService;
+const DevicesService = {
+    async fetchDevices(wardId) {
+        try {
+            const response = await axios.get(`${BASE_URL}/devices?wardId=${wardId}`);
+            return response.data;
+        } catch (error) {
+            throw new Error('Failed to fetch Devices');
+        }
+    }
+};
+export { WardsService, DevicesService };
 
 

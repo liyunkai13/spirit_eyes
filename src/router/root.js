@@ -1,4 +1,4 @@
-import {json, Outlet} from "react-router-dom";
+import {json, Link, Outlet} from "react-router-dom";
 import {fetchWards} from "../store/wardsSlice";
 import {useSelector} from "react-redux";
 import {selectWards} from "../store/wardsSlice";
@@ -48,7 +48,7 @@ const Root = ()=> {
                     <ul>
                         {wards.map((ward) => (
                             <li key={ward.wardId}>
-                                <a href={`/wards/${ward.wardId}`}>{ward.wardName}</a>
+                                <Link to={`/wards/${ward.wardId}`}>{ward.wardName}</Link>
                             </li>
                         ))}
                     </ul>

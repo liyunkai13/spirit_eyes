@@ -1,18 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {WardsService} from "../services/Service";
+import {DevicesService} from "../services/Service";
 
-export const wardsSlice = createSlice({
-    name: 'wards',
+export const devicesSlice = createSlice({
+    name: 'devices',
     initialState: {
         value: [],
         status: 'idle',
         error: null
     },
     reducers: {
-        addWard: (state, action) => {
+        addDevice: (state, action) => {
             state.value.push(action.payload);
         },
-        setWards: (state, action) => {
+        setDevices: (state, action) => {
             state.value = action.payload;
         },
         setError: (state, action) => {
@@ -25,16 +25,16 @@ export const wardsSlice = createSlice({
     }
 })
 // 每个 case reducer 函数会生成对应的 Action creators
-export const { addWard, setWards, setError, setStatus } = wardsSlice.actions
+export const { addDevice, setDevices, setError, setStatus } = devicesSlice.actions
 
 
 //thunk 异步逻辑
-export const fetchWards = () =>
+export const fetchDevices = (wardId) =>
     async dispatch => {
         dispatch(setStatus('loading'));
         try {
-            const wards = await WardsService.fetchWards();
-            dispatch(setWards(wards));
+            const devices = await DevicesService.fetchDevices(wardId);
+            dispatch(setDevices(devices));
             dispatch(setStatus('succeeded'));
         } catch (error) {
             dispatch(setError(error.message));
@@ -56,8 +56,8 @@ export const fetchWards = () =>
 //         }
 //     }
 // }
-export const selectWards = state => state.wards.value;
-export const selectWardsStatus = state => state.wards.status;
-export const selectWardsError = state => state.wards.error;
+export const selectDevices = state => state.devices.value;
+export const selectDevicesStatus = state => state.devices.status;
+export const selectDevicesError = state => state.devices.error;
 
-export default wardsSlice.reducer
+export default devicesSlice.reducer

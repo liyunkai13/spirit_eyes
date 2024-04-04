@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import store from "./store/store";
 import Root,{loaderGetter as wardsLoaderGetter } from "./router/root";
+import WardDetail,{loaderGetter as devicesLoaderGetter} from "./router/wardDetail";
 import ErrorPage from "./router/error-page";
 import {Provider, useDispatch} from "react-redux";
 
@@ -20,6 +21,14 @@ const Index = () =>{
             element: <Root/>,
             errorElement:<ErrorPage />,
             loader: wardsLoaderGetter(dispatch),
+            children: [
+                {
+                    path: "/wards/:wardId",
+                    element: <WardDetail/>,
+                    errorElement:<ErrorPage />,
+                    loader: devicesLoaderGetter(dispatch),
+                },
+            ],
         },
     ]);
     return <RouterProvider router={router} />;
