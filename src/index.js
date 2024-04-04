@@ -1,13 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {
+    createBrowserRouter,
+    RouterProvider,
+} from "react-router-dom";
+import store from "./store/store";
+import Root,{loaderGetter as wardsLoaderGetter } from "./router/root";
+import ErrorPage from "./router/error-page";
+import {Provider, useDispatch} from "react-redux";
+
+
+const Index = () =>{
+    const dispatch = useDispatch();
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <Root/>,
+            errorElement:<ErrorPage />,
+            loader: wardsLoaderGetter(dispatch),
+        },
+    ]);
+    return <RouterProvider router={router} />;
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+      <Provider store={store}>
+          <Index />
+      </Provider>
   </React.StrictMode>
 );
 

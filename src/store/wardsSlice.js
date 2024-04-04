@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import WardsService from "../services/wardsService";
+import WardsService from "../services/Service";
 
 export const wardsSlice = createSlice({
     name: 'wards',
@@ -28,18 +28,34 @@ export const wardsSlice = createSlice({
 export const { addWard, setWards, setError, setStatus } = wardsSlice.actions
 
 
+//thunk 异步逻辑
+export const fetchWards = () =>
+    async dispatch => {
+        dispatch(setStatus('loading'));
+        try {
+            const wards = await WardsService.fetchWards();
+            dispatch(setWards(wards));
+            dispatch(setStatus('succeeded'));
+        } catch (error) {
+            dispatch(setError(error.message));
+            dispatch(setStatus('failed'));
+        }
+    };
 
-export const fetchWards = () => async dispatch => {
-    dispatch(setStatus('loading'));
-    try {
-        const wards = await WardsService.fetchWards();
-        dispatch(setWards(wards));
-        dispatch(setStatus('succeeded'));
-    } catch (error) {
-        dispatch(setError(error.message));
-        dispatch(setStatus('failed'));
-    }
-};
+// // 外部的 thunk creator 函数
+// const fetchUserById = userId => {
+//     // 内部的 thunk 函数
+//     return async (dispatch, getState) => {
+//         try {
+//             // thunk 内发起异步数据请求
+//             const user = await userAPI.fetchById(userId)
+//             // 但数据响应完成后 dispatch 一个 action
+//             dispatch(userLoaded(user))
+//         } catch (err) {
+//             // 如果过程出错，在这里处理
+//         }
+//     }
+// }
 export const selectWards = state => state.wards.value;
 export const selectWardsStatus = state => state.wards.status;
 export const selectWardsError = state => state.wards.error;
