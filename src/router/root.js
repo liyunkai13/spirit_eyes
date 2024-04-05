@@ -1,14 +1,36 @@
-import {Form, json, Link, Outlet, useLoaderData} from "react-router-dom";
+import {Form, json, Link, Outlet, redirect, useLoaderData} from "react-router-dom";
 import {addWard} from "../store/wardsSlice";
 
 export const loaderGetter = (store) => async () => {
     return await store.getState().wards.value;
 
 };
-export const actionGetter = (dispatch) => async (params) => {
+
+//用于初步创建一个ward对象，重定向到其edit界面
+export const actionGetter = (store) => async () => {
     try {
-        dispatch(addWard());
-        return json({ message: "Ward added successfully" });
+        //TODO: 从redux获取userId
+        const userId = 1;
+        const wardId = store.getState().wards.value.length + 1;
+        // console.log('newWard',{
+        //     userId: userId,
+        //     wardId: wardId,
+        //     wardName: "New Ward",
+        //     wardGender: "未知",
+        //     wardAge: 0,
+        //     emContact: "911",
+        //     notes: "This is a general ward"
+        // });
+        await store.dispatch(addWard({
+            userId: userId,
+            wardId: wardId,
+            wardName: "New Ward",
+            wardGender: "未知",
+            wardAge: 0,
+            emContact: "911",
+            notes: "This is a general ward"
+        }));
+        return redirect(`/wards/${wardId}/edit`);
     } catch (e){
         throw json({ message: "Error occurred while adding ward" }, { status: e.status });
     }

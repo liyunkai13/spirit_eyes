@@ -2,10 +2,23 @@ import {Form, redirect, useLoaderData} from "react-router-dom";
 import {updateWard} from "../store/wardsSlice";
 
 
-export const loaderGetter = (store) => async ({params}) => {
-    const  wards = await  store.getState().wards.value;
-    //千万不能使用===，我们这里只需要比较值是否相等，不需要比较类型，别看黄色警告
-    return wards.find(ward => ward.wardId == params.wardId);
+export const loaderGetter = (store) => ({params}) => {
+    try {
+        const  wards = store.getState().wards.value;
+        console.log("wards",wards);
+        console.log("wardId",params.wardId);
+        //千万不能使用===，我们这里只需要比较值是否相等，不需要比较类型，别看黄色警告
+        const selectedWard = wards.find(ward => ward.wardId == params.wardId);
+        console.log("selectedWard",selectedWard);
+
+        return selectedWard;
+    }catch (e) {
+        console.error(e);
+        return {};
+    }
+
+
+
 };
 
 export const actionGetter = (dispatch) => async ({request,params}) => {
@@ -35,14 +48,14 @@ export default function EditWard() {
             <p>
                 <span>Name</span>
                 <input
-                    placeholder="First"
+                    placeholder="李华"
                     aria-label="First name"
                     type="text"
                     name="wardName"
                     defaultValue={wardName}
                 />
                 <input
-                    placeholder="Last"
+                    placeholder="男"
                     aria-label="Last name"
                     type="text"
                     name="wardGender"
@@ -61,7 +74,7 @@ export default function EditWard() {
             <label>
                 <span>Emergence Contact</span>
                 <input
-                    placeholder="https://example.com/avatar.jpg"
+                    placeholder="911"
                     aria-label="Avatar URL"
                     type="text"
                     name="emContact"

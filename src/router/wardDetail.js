@@ -9,6 +9,7 @@ export const loaderGetter = (store) => async ({params}) => {
     //千万不能使用===，我们这里只需要比较值是否相等，不需要比较类型，别看黄色警告
     const devices = await store.getState().devices.value.filter(device => device.wardId == params.wardId);
     const ward = await store.getState().wards.value.find(ward => ward.wardId == params.wardId);
+    console.log("经过了wardDetail");
     return {devices, ward};
 };
 const WardDetail = ()=>{

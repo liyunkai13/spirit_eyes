@@ -39,8 +39,10 @@ export const wardsSlice = createSlice({
         error: null
     },
     reducers: {
-        addWard: (state, action) => {
+        addWard: (state,action) => {
+            console.log("addWard: ", action.payload);
             state.value.push(action.payload);
+            console.log("state.value: ", state.value);
         },
         setWards: (state, action) => {
             state.value = action.payload;

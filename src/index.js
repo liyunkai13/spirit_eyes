@@ -22,7 +22,7 @@ const Index = () =>{
             element: <Root/>,
             errorElement:<ErrorPage />,
             loader: wardsLoaderGetter(store),
-            action: newWardActionGetter(dispatch),
+            action: newWardActionGetter(store),
             children: [
                 {
                     path: "/wards/:wardId",
