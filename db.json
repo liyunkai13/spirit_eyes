@@ -16,22 +16,29 @@
       "userId": 1,
       "wardId": 1,
       "wardName": "Ward 1",
-      "wardType": "General",
-      "wardCapacity": 20
+      "wardGender": "male",
+      "wardAge": 20,
+      "emContact": "1234567890",
+      "notes": "This is a general ward"
     },
     {
       "userId": 1,
       "wardId": 2,
       "wardName": "Ward 2",
-      "wardType": "General",
-      "wardCapacity": 20
+      "wardGender": "male",
+      "wardAge": 18,
+      "emContact": "1234567890",
+      "notes": "This is a general ward"
+
     },
     {
       "userId": 1,
       "wardId": 3,
       "wardName": "Ward 3",
-      "wardType": "General",
-      "wardCapacity": 20
+      "wardGender": "male",
+      "wardAge": 50,
+      "emContact": "1234567890",
+      "notes": "This is a general ward"
     }
 
   ],

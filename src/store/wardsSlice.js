@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
 import {WardsService} from "../services/Service";
 
 export const wardsSlice = createSlice({
     name: 'wards',
     initialState: {
-        //TODO: 选中的ward的详细信息
+        //TODO :选中的ward的详细信息
         //selectedWard:{},
         value: [],
         status: 'idle',
@@ -17,6 +17,27 @@ export const wardsSlice = createSlice({
         setWards: (state, action) => {
             state.value = action.payload;
         },
+        updateWard: (state, action) => {
+            const {wardId, newWard} = action.payload;
+            console.log("wardId: ", wardId);
+            console.log("newWard: ", newWard);
+            const index = state.value.findIndex(ward => ward.wardId == wardId);
+            if (index !== -1) {
+                //解构newWard
+                const userId = state.value[index].userId;
+                console.log("userId: ", userId);
+                const tmp = {
+                    ...newWard,
+                    wardId: wardId,
+                    userId: userId,
+                };
+                //更新state
+                console.log("tmp: ", tmp);
+                state.value[index] = tmp;
+            } else {
+                console.log("ward not found,something wrong!");
+            }
+        },
         setError: (state, action) => {
             state.status = 'failed';
             state.error = action.payload;
@@ -27,7 +48,7 @@ export const wardsSlice = createSlice({
     }
 })
 // 每个 case reducer 函数会生成对应的 Action creators
-export const { addWard, setWards, setError, setStatus } = wardsSlice.actions
+export const { addWard, setWards, updateWard,setError, setStatus } = wardsSlice.actions
 
 
 //thunk 异步逻辑

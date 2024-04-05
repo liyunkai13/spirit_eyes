@@ -17,9 +17,11 @@ export const loaderGetter = (dispatch) => async ({params}) => {
 const WardDetail = ()=>{
     const wardId = useLoaderData();
     const devices = useSelector(selectDevices);
+    const {wardName} = useSelector((state) => state.wards.value.find((ward) => ward.wardId == wardId));
 
     return(
         <div>
+            <>{wardName}</>
             <h1>Ward Detail</h1>
             <div>
                 {/*虽然很多地方是显示未解析变量，但现在看来这些就是没有问题，device是一个对象数组而不是对象，不需要解构赋值*/}
