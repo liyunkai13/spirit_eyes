@@ -1,5 +1,5 @@
-import {json, Link, Outlet} from "react-router-dom";
-import {fetchWards} from "../store/wardsSlice";
+import {json, Link, Outlet,Form} from "react-router-dom";
+import {addWard, fetchWards} from "../store/wardsSlice";
 import {useSelector} from "react-redux";
 import {selectWards} from "../store/wardsSlice";
 export const loaderGetter = (dispatch) => async () => {
@@ -10,7 +10,14 @@ export const loaderGetter = (dispatch) => async () => {
         throw json({ message: "Error occurred while fetching data" }, { status: e.status });
     }
 };
-
+export const actionGetter = (dispatch) => async (params) => {
+    try {
+        dispatch(addWard());
+        return json({ message: "Ward added successfully" });
+    } catch (e){
+        throw json({ message: "Error occurred while adding ward" }, { status: e.status });
+    }
+};
 const Root = ()=> {
     //mapStateToProps
     const wards = useSelector(selectWards);
@@ -40,9 +47,9 @@ const Root = ()=> {
                             aria-live="polite"
                         ></div>
                     </form>
-                    <form method="post">
+                    <Form method="post">
                         <button type="submit">New</button>
-                    </form>
+                    </Form>
                 </div>
                 <nav>
                     <ul>

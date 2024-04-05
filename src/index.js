@@ -7,10 +7,11 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import store from "./store/store";
-import Root,{loaderGetter as wardsLoaderGetter } from "./router/root";
+import Root,{loaderGetter as wardsLoaderGetter,actionGetter as newWardActionGetter } from "./router/root";
 import WardDetail,{loaderGetter as devicesLoaderGetter} from "./router/wardDetail";
 import ErrorPage from "./router/error-page";
 import {Provider, useDispatch} from "react-redux";
+import EditWard,{loaderGetter as wardLoaderGetter} from "./router/edit";
 
 
 const Index = () =>{
@@ -21,12 +22,19 @@ const Index = () =>{
             element: <Root/>,
             errorElement:<ErrorPage />,
             loader: wardsLoaderGetter(dispatch),
+            action: newWardActionGetter(dispatch),
             children: [
                 {
                     path: "/wards/:wardId",
                     element: <WardDetail/>,
                     errorElement:<ErrorPage />,
                     loader: devicesLoaderGetter(dispatch),
+                },
+                {
+                    path: "/wards/:wardId/edit",
+                    element: <EditWard/>,
+                    errorElement:<ErrorPage />,
+                    loader: wardLoaderGetter(store),
                 },
             ],
         },

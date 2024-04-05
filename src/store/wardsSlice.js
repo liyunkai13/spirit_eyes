@@ -4,6 +4,8 @@ import {WardsService} from "../services/Service";
 export const wardsSlice = createSlice({
     name: 'wards',
     initialState: {
+        //TODO: 选中的ward的详细信息
+        //selectedWard:{},
         value: [],
         status: 'idle',
         error: null
