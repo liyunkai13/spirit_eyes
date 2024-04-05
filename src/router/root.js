@@ -1,14 +1,9 @@
-import {json, Link, Outlet,Form} from "react-router-dom";
-import {addWard, fetchWards} from "../store/wardsSlice";
-import {useSelector} from "react-redux";
-import {selectWards} from "../store/wardsSlice";
-export const loaderGetter = (dispatch) => async () => {
-    try {
-        dispatch(fetchWards());
-        return json({ message: "Data fetched successfully" });
-    } catch (e) {
-        throw json({ message: "Error occurred while fetching data" }, { status: e.status });
-    }
+import {Form, json, Link, Outlet, useLoaderData} from "react-router-dom";
+import {addWard} from "../store/wardsSlice";
+
+export const loaderGetter = (store) => async () => {
+    return await store.getState().wards.value;
+
 };
 export const actionGetter = (dispatch) => async (params) => {
     try {
@@ -20,7 +15,7 @@ export const actionGetter = (dispatch) => async (params) => {
 };
 const Root = ()=> {
     //mapStateToProps
-    const wards = useSelector(selectWards);
+    const wards = useLoaderData();
 
 
 

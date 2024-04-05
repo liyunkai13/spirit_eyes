@@ -1,10 +1,45 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {DevicesService} from "../services/Service";
-
 export const devicesSlice = createSlice({
     name: 'devices',
     initialState: {
-        value: [],
+        value: [
+            {
+                userId: 1,
+                wardId: 1,
+                deviceId: 1,
+                deviceName: "Device 1",
+                deviceType: "Monitor",
+                deviceStatus: "Active",
+                deviceUrl: "http://localhost:8080"
+            },
+            {
+                userId: 1,
+                wardId: 1,
+                deviceId: 2,
+                deviceName: "Device 2",
+                deviceType: "Monitor",
+                deviceStatus: "Active",
+                deviceUrl: "http://localhost:8080"
+            },
+            {
+                userId: 1,
+                wardId: 1,
+                deviceId: 3,
+                deviceName: "Device 3",
+                deviceType: "Monitor",
+                deviceStatus: "Active",
+                deviceUrl: "http://localhost:8080"
+            },
+            {
+                userId: 1,
+                wardId: 2,
+                deviceId: 4,
+                deviceName: "Device 4",
+                deviceType: "Monitor",
+                deviceStatus: "Active",
+                deviceUrl: "http://localhost:8080"
+            }
+        ],
         status: 'idle',
         error: null
     },
@@ -28,34 +63,6 @@ export const devicesSlice = createSlice({
 export const { addDevice, setDevices, setError, setStatus } = devicesSlice.actions
 
 
-//thunk 异步逻辑
-export const fetchDevices = (wardId) =>
-    async dispatch => {
-        dispatch(setStatus('loading'));
-        try {
-            const devices = await DevicesService.fetchDevices(wardId);
-            dispatch(setDevices(devices));
-            dispatch(setStatus('succeeded'));
-        } catch (error) {
-            dispatch(setError(error.message));
-            dispatch(setStatus('failed'));
-        }
-    };
-
-// // 外部的 thunk creator 函数
-// const fetchUserById = userId => {
-//     // 内部的 thunk 函数
-//     return async (dispatch, getState) => {
-//         try {
-//             // thunk 内发起异步数据请求
-//             const user = await userAPI.fetchById(userId)
-//             // 但数据响应完成后 dispatch 一个 action
-//             dispatch(userLoaded(user))
-//         } catch (err) {
-//             // 如果过程出错，在这里处理
-//         }
-//     }
-// }
 export const selectDevices = state => state.devices.value;
 export const selectDevicesStatus = state => state.devices.status;
 export const selectDevicesError = state => state.devices.error;

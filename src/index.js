@@ -21,14 +21,14 @@ const Index = () =>{
             path: "/",
             element: <Root/>,
             errorElement:<ErrorPage />,
-            loader: wardsLoaderGetter(dispatch),
+            loader: wardsLoaderGetter(store),
             action: newWardActionGetter(dispatch),
             children: [
                 {
                     path: "/wards/:wardId",
                     element: <WardDetail/>,
                     errorElement:<ErrorPage />,
-                    loader: devicesLoaderGetter(dispatch),
+                    loader: devicesLoaderGetter(store),
                 },
                 {
                     path: "/wards/:wardId/edit",

@@ -1,12 +1,40 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {WardsService} from "../services/Service";
 
 export const wardsSlice = createSlice({
     name: 'wards',
     initialState: {
         //TODO :选中的ward的详细信息
         //selectedWard:{},
-        value: [],
+        value: [
+            {
+                userId: 1,
+                wardId: 1,
+                wardName: "Ward 1",
+                wardGender: "male",
+                wardAge: 20,
+                emContact: "1234567890",
+                notes: "This is a general ward"
+            },
+            {
+                userId: 1,
+                wardId: 2,
+                wardName: "Ward 2",
+                wardGender: "male",
+                wardAge: 18,
+                emContact: "1234567890",
+                notes: "This is a general ward"
+
+            },
+            {
+                userId: 1,
+                wardId: 3,
+                wardName: "Ward 3",
+                wardGender: "male",
+                wardAge: 50,
+                emContact: "1234567890",
+                notes: "This is a general ward"
+            }
+        ],
         status: 'idle',
         error: null
     },
@@ -49,36 +77,6 @@ export const wardsSlice = createSlice({
 })
 // 每个 case reducer 函数会生成对应的 Action creators
 export const { addWard, setWards, updateWard,setError, setStatus } = wardsSlice.actions
-
-
-//thunk 异步逻辑
-export const fetchWards = () =>
-    async dispatch => {
-        dispatch(setStatus('loading'));
-        try {
-            const wards = await WardsService.fetchWards();
-            dispatch(setWards(wards));
-            dispatch(setStatus('succeeded'));
-        } catch (error) {
-            dispatch(setError(error.message));
-            dispatch(setStatus('failed'));
-        }
-    };
-
-// // 外部的 thunk creator 函数
-// const fetchUserById = userId => {
-//     // 内部的 thunk 函数
-//     return async (dispatch, getState) => {
-//         try {
-//             // thunk 内发起异步数据请求
-//             const user = await userAPI.fetchById(userId)
-//             // 但数据响应完成后 dispatch 一个 action
-//             dispatch(userLoaded(user))
-//         } catch (err) {
-//             // 如果过程出错，在这里处理
-//         }
-//     }
-// }
 export const selectWards = state => state.wards.value;
 export const selectWardsStatus = state => state.wards.status;
 export const selectWardsError = state => state.wards.error;
