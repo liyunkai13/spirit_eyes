@@ -1,6 +1,8 @@
 import {useLoaderData} from "react-router-dom";
 import {Link} from "react-router-dom";
 import {Button} from "antd";
+import Device from "../components/device";
+import {PlusSquareOutlined} from "@ant-design/icons";
 
 
 // params 是一个对象，需要使用解构赋值来获取参数（花括号）
@@ -18,16 +20,61 @@ const WardDetail = ()=>{
 
     return(
         <div>
-            <>{ward.wardName}</>
-            <h1>Ward Detail</h1>
-            <div>
-                {/*虽然很多地方是显示未解析变量，但现在看来这些就是没有问题，device是一个对象数组而不是对象，不需要解构赋值*/}
-                {devices.map((device) => (
-                    <div key={device.deviceId}>
-                        <h2>{device.deviceName}</h2>
-                        <p>{device.deviceUrl}</p>
+            {/*实施情况栏，显示各个设备*/}
+            <div  className="deviceStatus" style={{
+                width: "50vw",
+                borderRadius: "10px",
+                padding: "0.8rem",
+                background: "white",
+
+                display: "flex",
+                flexDirection: "column",
+
+            }}>
+                <h2 style={{
+                    marginLeft: "1rem",
+                    marginBottom:"0.3rem",
+                }}>实时情况</h2>
+
+                <hr style={{
+                    width: "100%",
+                }}/>
+                <div id="devices" style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(3, 2fr)',
+                    gridGap: '10px',
+                }}>
+                    {/*虽然很多地方是显示未解析变量，但现在看来这些就是没有问题，device是一个对象数组而不是对象，不需要解构赋值*/}
+                    {devices.map((device) => (
+                        <Device key={device.deviceId} device={device}/>
+                    ))}
+                    <div style={{
+                        width: '15vw',
+                        height: '20vh',
+                        margin:'0 0.5rem 1rem 0.5rem',
+                        // padding: '0.3rem',
+                        border: '1px dashed #ccc',
+                        borderRadius: "3px",
+
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                        <PlusSquareOutlined style={{
+                            fontSize:'5rem',
+                            color: '#D7D7D7',
+                        }} />
                     </div>
-                ))}
+
+                </div>
+            </div>
+
+            {/*今日情况栏*/}
+            <div id="todayState">
+                <h1>今日情况</h1>
+                <p>今日情况</p>
+                <h1>近一周进入卫生间次数</h1>
+
             </div>
             <Button>
                 <Link to={`/wards/${ward.wardId}/edit`}>Back to Wards</Link>

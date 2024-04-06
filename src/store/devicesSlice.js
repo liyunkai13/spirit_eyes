@@ -10,7 +10,7 @@ export const devicesSlice = createSlice({
                 deviceName: "Device 1",
                 deviceType: "Monitor",
                 deviceStatus: "Active",
-                deviceUrl: "http://localhost:8080"
+                deviceUrl: "https://img.qunliao.info:443/4oEGX68t_9505974551.mp4"
             },
             {
                 userId: 1,
@@ -19,7 +19,7 @@ export const devicesSlice = createSlice({
                 deviceName: "Device 2",
                 deviceType: "Monitor",
                 deviceStatus: "Active",
-                deviceUrl: "http://localhost:8080"
+                deviceUrl: "https://img.qunliao.info:443/4oEGX68t_9505974551.mp4"
             },
             {
                 userId: 1,
@@ -28,7 +28,7 @@ export const devicesSlice = createSlice({
                 deviceName: "Device 3",
                 deviceType: "Monitor",
                 deviceStatus: "Active",
-                deviceUrl: "http://localhost:8080"
+                deviceUrl: "https://img.qunliao.info:443/4oEGX68t_9505974551.mp4"
             },
             {
                 userId: 1,
@@ -37,8 +37,17 @@ export const devicesSlice = createSlice({
                 deviceName: "Device 4",
                 deviceType: "Monitor",
                 deviceStatus: "Active",
-                deviceUrl: "http://localhost:8080"
-            }
+                deviceUrl: "https://img.qunliao.info:443/4oEGX68t_9505974551.mp4"
+            },
+            {
+                userId: 1,
+                wardId: 1,
+                deviceId: 5,
+                deviceName: "Device 5",
+                deviceType: "Monitor",
+                deviceStatus: "Active",
+                deviceUrl: "https://img.qunliao.info:443/4oEGX68t_9505974551.mp4"
+            },
         ],
         status: 'idle',
         error: null
