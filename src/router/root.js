@@ -1,4 +1,4 @@
-import {Form, json, Link, Outlet, redirect, useLoaderData} from "react-router-dom";
+import {Form, json, NavLink, Outlet, redirect, useLoaderData} from "react-router-dom";
 import {addWard} from "../store/wardsSlice";
 
 export const loaderGetter = (store) => async () => {
@@ -72,7 +72,14 @@ const Root = ()=> {
                     <ul>
                         {wards.map((ward) => (
                             <li key={ward.wardId}>
-                                <Link to={`/wards/${ward.wardId}`}>{ward.wardName}</Link>
+                                <NavLink to={`/wards/${ward.wardId}`} className={({ isActive, isPending }) =>
+                                    isActive
+                                        ? "active"
+                                        : isPending
+                                            ? "pending"
+                                            : ""
+                                }
+                                >{ward.wardName}</NavLink>
                             </li>
                         ))}
                     </ul>
