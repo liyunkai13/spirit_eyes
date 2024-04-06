@@ -5,8 +5,8 @@ import {Avatar} from "antd";
 const Device = ({device})=>{
     return(
         <div style={{
-            width: '15vw',
-            height: '20vh',
+            width: '20rem',
+            height: '15rem',
             margin:'0 0.5rem 1rem 0.5rem',
             padding: '0.3rem',
             border: '1px solid #ccc',
@@ -20,8 +20,6 @@ const Device = ({device})=>{
             <div id="deviceHeader" style={{
                 width: '100%',
                 height: '2.5rem',
-
-
                 display: 'flex',
                 alignItems: "flex-end",
 

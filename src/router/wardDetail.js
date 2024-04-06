@@ -22,11 +22,11 @@ const WardDetail = ()=>{
         <div>
             {/*实施情况栏，显示各个设备*/}
             <div  className="deviceStatus" style={{
-                width: "50vw",
+                width:"65rem",
+                height:"38rem",
                 borderRadius: "10px",
                 padding: "0.8rem",
                 background: "white",
-
                 display: "flex",
                 flexDirection: "column",
 
@@ -36,21 +36,25 @@ const WardDetail = ()=>{
                     marginBottom:"0.3rem",
                 }}>实时情况</h2>
 
+                {/*分割线*/}
+
                 <hr style={{
                     width: "100%",
                 }}/>
+
                 <div id="devices" style={{
+                    alignSelf: 'center',
                     display: 'grid',
                     gridTemplateColumns: 'repeat(3, 2fr)',
-                    gridGap: '10px',
+                    gridGap: '0.3rem',
                 }}>
-                    {/*虽然很多地方是显示未解析变量，但现在看来这些就是没有问题，device是一个对象数组而不是对象，不需要解构赋值*/}
+
                     {devices.map((device) => (
                         <Device key={device.deviceId} device={device}/>
                     ))}
                     <div style={{
-                        width: '15vw',
-                        height: '20vh',
+                        width: '20rem',
+                        height: '15rem',
                         margin:'0 0.5rem 1rem 0.5rem',
                         // padding: '0.3rem',
                         border: '1px dashed #ccc',

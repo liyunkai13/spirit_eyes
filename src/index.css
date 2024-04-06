@@ -243,8 +243,8 @@ i {
   flex: 1;
   display: flex;
   justify-content: flex-start;
-  padding: 2rem 4rem;
-  width: 100%;
+  padding: 2rem 3rem;
+  width: 100%;  /*我发现这行似乎就没有作用*/
 }
 
 #detail.loading {
