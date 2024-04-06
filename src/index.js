@@ -12,6 +12,7 @@ import WardDetail,{loaderGetter as devicesLoaderGetter} from "./router/wardDetai
 import ErrorPage from "./router/error-page";
 import {Provider, useDispatch} from "react-redux";
 import EditWard,{loaderGetter as wardLoaderGetter,actionGetter as editActionGetter} from "./router/edit";
+import Default from "./router/default";
 
 
 const Index = () =>{
@@ -24,6 +25,7 @@ const Index = () =>{
             loader: wardsLoaderGetter(store),
             action: newWardActionGetter(store),
             children: [
+                { index: true, element: <Default/> },
                 {
                     path: "/wards/:wardId",
                     element: <WardDetail/>,

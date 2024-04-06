@@ -1,4 +1,4 @@
-import {Form, json, NavLink, Outlet, redirect, useLoaderData} from "react-router-dom";
+import {Form, json, NavLink, Outlet, redirect, useLoaderData, useNavigation} from "react-router-dom";
 import {addWard} from "../store/wardsSlice";
 
 export const loaderGetter = (store) => async () => {
@@ -38,7 +38,7 @@ export const actionGetter = (store) => async () => {
 const Root = ()=> {
     //mapStateToProps
     const wards = useLoaderData();
-
+    const navigation = useNavigation();
 
 
     return (
@@ -85,7 +85,10 @@ const Root = ()=> {
                     </ul>
                 </nav>
             </div>
-            <div id="detail">
+            <div id="detail"
+                 className={
+                     navigation.state === "loading" ? "loading" : ""
+                 }>
                 <Outlet />
             </div>
         </>
