@@ -1,6 +1,6 @@
 import {useLoaderData} from "react-router-dom";
 import {Link} from "react-router-dom";
-import {Button} from "antd";
+import {Button, Empty} from "antd";
 import Device from "../components/device";
 import {PlusSquareOutlined} from "@ant-design/icons";
 
@@ -11,7 +11,7 @@ export const loaderGetter = (store) => async ({params}) => {
     //千万不能使用===，我们这里只需要比较值是否相等，不需要比较类型，别看黄色警告
     const devices = await store.getState().devices.value.filter(device => device.wardId == params.wardId);
     const ward = await store.getState().wards.value.find(ward => ward.wardId == params.wardId);
-    console.log("经过了wardDetail");
+    // console.log("经过了wardDetail");
     return {devices, ward};
 };
 const WardDetail = ()=>{
@@ -41,36 +41,51 @@ const WardDetail = ()=>{
                 <hr style={{
                     width: "100%",
                 }}/>
+                {/*设备栏*/}
+                {
+                    devices.length!=0?
+                        <div id="devices" style={{
+                            alignSelf: 'center',
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(3, 2fr)',
+                            gridGap: '0.3rem',
+                        }}>
 
-                <div id="devices" style={{
-                    alignSelf: 'center',
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 2fr)',
-                    gridGap: '0.3rem',
-                }}>
+                            {devices.map((device) => (
+                                <Device key={device.deviceId} device={device}/>
+                            ))}
+                            <div style={{
+                                width: '20rem',
+                                height: '15rem',
+                                margin:'0 0.5rem 1rem 0.5rem',
+                                // padding: '0.3rem',
+                                border: '1px dashed #ccc',
+                                borderRadius: "3px",
 
-                    {devices.map((device) => (
-                        <Device key={device.deviceId} device={device}/>
-                    ))}
-                    <div style={{
-                        width: '20rem',
-                        height: '15rem',
-                        margin:'0 0.5rem 1rem 0.5rem',
-                        // padding: '0.3rem',
-                        border: '1px dashed #ccc',
-                        borderRadius: "3px",
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}>
+                                <PlusSquareOutlined style={{
+                                    fontSize:'5rem',
+                                    color: '#D7D7D7',
+                                }} onClick={()=>{}}/>
+                            </div>
 
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                        <PlusSquareOutlined style={{
-                            fontSize:'5rem',
-                            color: '#D7D7D7',
-                        }} />
-                    </div>
+                        </div>:
+                        <Empty
+                            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                            imageStyle={{
+                                height: 60,
+                            }}
+                            description={
+                                <span>There is no device</span>
+                            }
+                        >
+                            <Button type="primary" onClick={()=>{}}>Create Now</Button>
+                        </Empty>
+                }
 
-                </div>
             </div>
 
             {/*今日情况栏*/}
