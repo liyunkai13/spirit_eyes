@@ -32,22 +32,22 @@ const Device = ({device})=>{
                     fontWeight: 'bold',
                 }}>{device.deviceName}</span>
 
+                {/*TODO: 要么实现无边框按钮，要么实现onHover效果*/}
                 <div id="action" style={{
                     flex: 1,
                     marginRight: '0.5rem',
                     display: 'flex',
                     justifyContent: 'flex-end',
                 }}>
-                    <span style={{
+                    <div
+                          style={{
                         fontSize: '0.8rem',
                         color: '#ccc',
                         paddingInline: '0.5rem',
                         marginInline: '0.5rem',
                         borderRight: '1px solid #D7D7D7',
-
-
-                    }}>设备日志</span>
-                    <SettingOutlined/>
+                    }}>设备日志</div>
+                    <SettingOutlined />
                 </div>
 
 
