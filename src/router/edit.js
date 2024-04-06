@@ -1,4 +1,4 @@
-import {Form, redirect, useLoaderData} from "react-router-dom";
+import {Form, redirect, useLoaderData, useNavigate} from "react-router-dom";
 import {updateWard} from "../store/wardsSlice";
 
 
@@ -38,7 +38,7 @@ export const actionGetter = (dispatch) => async ({request,params}) => {
 // 有两种方案实现用Form实现信息修改，一种是原生Form和useState，另一种是使用react-router-dom的action和封装的Form，这里使用react-router-dom的Form
 export default function EditWard() {
     const ward = useLoaderData();
-
+    const navigate = useNavigate();
 
     //解构出指定的属性
     const {wardName,wardGender,wardAge,emContact,notes} = ward;
@@ -92,7 +92,12 @@ export default function EditWard() {
             </label>
             <p>
                 <button type="submit">Save</button>
-                <button type="button">Cancel</button>
+                <button type="button" onClick={()=>{
+                    //为什么按钮上没有event.preventDefault？
+                    // <button type="button"> 虽然看似多余，却是防止按钮提交表单的 默认 HTML 行为。
+                    // window.history.back(); //一样生效
+                    navigate(-1);
+                }}>Cancel</button>
             </p>
         </Form>
     );
