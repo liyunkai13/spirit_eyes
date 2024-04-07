@@ -1,3 +1,4 @@
+// ToDo : 在现阶段，react-router-dom 的loader里边用来同步redux state和后端，尽量只同步传递路由参数，再具体的页面内使用路由参数查找redux的状态（发现在同一个页面内操作，有的redux状态的改变，loader不会重新加载）。如果真的加了服务器，再分出来哪些数据是不必邀同步到redux的。
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -13,6 +14,7 @@ import ErrorPage from "./router/error-page";
 import {Provider, useDispatch} from "react-redux";
 import EditWard,{loaderGetter as wardLoaderGetter,actionGetter as editActionGetter} from "./router/edit";
 import Default from "./router/default";
+import DeviceManage from "./router/deviceManage";
 
 
 const Index = () =>{
@@ -29,6 +31,12 @@ const Index = () =>{
                 {
                     path: "/wards/:wardId",
                     element: <WardDetail/>,
+                    errorElement:<ErrorPage />,
+                    loader: devicesLoaderGetter(store),
+                },
+                {
+                    path: "/wards/:wardId/devices",
+                    element: <DeviceManage/>,
                     errorElement:<ErrorPage />,
                     loader: devicesLoaderGetter(store),
                 },

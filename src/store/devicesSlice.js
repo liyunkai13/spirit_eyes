@@ -1,3 +1,4 @@
+//TODO : 现在redux管理的状态没有满足不可变性的建议，
 import { createSlice } from '@reduxjs/toolkit'
 export const devicesSlice = createSlice({
     name: 'devices',
@@ -59,6 +60,25 @@ export const devicesSlice = createSlice({
         setDevices: (state, action) => {
             state.value = action.payload;
         },
+        updateDevice: (state, action) => {
+            const newDevice = action.payload;
+            console.log('redux收到的fullData',newDevice);
+            const index = state.value.findIndex(device => device.deviceId === newDevice.deviceId);
+            if (index !== -1) {
+                //更新state
+                const newValue = state.value.slice();
+                newValue[index] = newDevice;
+                console.log('要更新至的状态',newValue);
+                const value = newValue;
+                console.log('更新后的状态',value);
+                return {
+                    ...state,
+                    value
+                }
+            } else {
+                state.value.push(newDevice);
+            }
+        },
         setError: (state, action) => {
             state.status = 'failed';
             state.error = action.payload;
@@ -69,10 +89,12 @@ export const devicesSlice = createSlice({
     }
 })
 // 每个 case reducer 函数会生成对应的 Action creators
-export const { addDevice, setDevices, setError, setStatus } = devicesSlice.actions
+export const { addDevice, setDevices, updateDevice,setError, setStatus } = devicesSlice.actions
 
 
-export const selectDevices = state => state.devices.value;
+export const selectDevices = (state) => {
+    console.log('selectDevices被调用');
+    return state.devices.value};
 export const selectDevicesStatus = state => state.devices.status;
 export const selectDevicesError = state => state.devices.error;
 

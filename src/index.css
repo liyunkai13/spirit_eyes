@@ -359,3 +359,8 @@ i {
   justify-content: center;
   width: 100%;
 }
+.editable-row .ant-form-item-explain {
+  position: absolute;
+  top: 100%;
+  font-size: 12px;
+}
