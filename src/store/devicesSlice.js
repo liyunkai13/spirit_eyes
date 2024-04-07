@@ -57,6 +57,13 @@ export const devicesSlice = createSlice({
         addDevice: (state, action) => {
             state.value.push(action.payload);
         },
+        deleteDevice: (state, action) => {
+            const deviceId = action.payload;
+            const index = state.value.findIndex(device => device.deviceId === deviceId);
+            if (index !== -1) {
+                state.value.splice(index, 1);
+            }
+        },
         setDevices: (state, action) => {
             state.value = action.payload;
         },
@@ -89,7 +96,7 @@ export const devicesSlice = createSlice({
     }
 })
 // 每个 case reducer 函数会生成对应的 Action creators
-export const { addDevice, setDevices, updateDevice,setError, setStatus } = devicesSlice.actions
+export const { addDevice,deleteDevice, setDevices, updateDevice,setError, setStatus } = devicesSlice.actions
 
 
 export const selectDevices = (state) => {

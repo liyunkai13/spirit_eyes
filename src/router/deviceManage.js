@@ -1,9 +1,9 @@
 //TODO : 在这个逻辑中，save之后虽然可成功redux状态，但不会触发组件的重新渲染。现在的逻辑是用useState刷新组件,并没有在修改后重新从redux同步再刷新
 import React, {useState} from 'react';
-import { Form, Input, InputNumber, Popconfirm, Table, Typography } from 'antd';
+import {Button, Form, Input, InputNumber, Popconfirm, Table, Typography} from 'antd';
 import {useLoaderData} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {updateDevice} from "../store/devicesSlice";
+import {deleteDevice, updateDevice} from "../store/devicesSlice";
 
 const EditableCell = ({
                           editing,
@@ -100,6 +100,13 @@ const DeviceManage = () => {
             console.log('Validate Failed:', errInfo);
         }
     };
+    const handleDelete = (key) => {
+        const newData = devicesInForm.filter((device) => device.deviceId !== key);
+        dispatch(deleteDevice(key));
+        console.log('newData',newData);
+        setDevicesInform(newData);
+    };
+
     const columns = [
         {
             title: 'ID',
@@ -136,25 +143,47 @@ const DeviceManage = () => {
             dataIndex: 'operation',
             render: (_, record) => {
                 const editable = isEditing(record);
-                return editable ? (
-                    <span>
-            <Typography.Link
-                onClick={() => save(record.deviceId)}
-                style={{
-                    marginRight: 8,
-                }}
-            >
-              Save
-            </Typography.Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <a>Cancel</a>
-            </Popconfirm>
-          </span>
-                ) : (
-                    <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
-                        Edit
-                    </Typography.Link>
-                );
+                return (
+                    <div>
+                        {
+                            editable ? (
+                                    //*如果正在编辑该条目，Save和Cancel两个按钮,cancel是确认弹窗
+                        <span>
+                            <Typography.Link
+                                onClick={() => save(record.deviceId)}
+                                style={{
+                                    marginRight: 8,
+                                }}
+                            >
+                                Save
+                            </Typography.Link>
+
+                            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+                                <a>Cancel</a>
+                            </Popconfirm>
+                        </span>
+                        ) : (
+                            //如果没有在编辑该条目，就看是不是有条目正在被编辑
+                            <Button disabled={editingKey !== ''}>
+                                <Typography.Link  onClick={() => edit(record)}>
+                                    Edit
+                                </Typography.Link>
+                            </Button>
+
+
+                        )
+                        }
+
+                        {/*删除按钮，带确认弹窗 */}
+                        {devicesInForm.length >= 1 ? (
+                            <Button disabled={editingKey !== ''}>
+                                <Popconfirm title="Sure to delete?"  onConfirm={() => handleDelete(record.deviceId)}>
+                                    <a>Delete</a>
+                                </Popconfirm>
+                            </Button>
+                        ) : null }
+                    </div>
+                )
             },
         },
     ];
