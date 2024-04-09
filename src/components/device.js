@@ -61,7 +61,7 @@ const Device = ({device})=>{
 
 
             {/*视频*/}
-            <video style={{
+            <video autoPlay muted playsInline loop controls style={{
                 width: '98%',
             }}>
                 <source src={device.deviceUrl} type="video/mp4" />
