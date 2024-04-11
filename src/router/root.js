@@ -1,5 +1,6 @@
 import {Form, json, NavLink, Outlet, redirect, useLoaderData, useNavigation} from "react-router-dom";
 import {addWard} from "../store/wardsSlice";
+import Footer from "../components/footer";
 
 export const loaderGetter = (store) => async () => {
     return await store.getState().wards.value;
@@ -90,6 +91,7 @@ const Root = ()=> {
                      navigation.state === "loading" ? "loading" : ""
                  }>
                 <Outlet />
+                <Footer/>
             </div>
         </>
     );
