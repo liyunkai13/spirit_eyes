@@ -239,10 +239,12 @@ i {
 }
 
 #detail {
-  background: green;
+  background: #f0f2f5 ;
   flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
   padding: 2rem 3rem;
   width: 100%;  /*我发现这行似乎就没有作用*/
 }

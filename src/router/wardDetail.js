@@ -1,8 +1,8 @@
-import {useLoaderData} from "react-router-dom";
-import {Link} from "react-router-dom";
+import {Link, useLoaderData} from "react-router-dom";
 import {Button, Empty} from "antd";
 import Device from "../components/device";
 import {PlusSquareOutlined} from "@ant-design/icons";
+import TodayStatus from "../components/todayStatus";
 
 
 // params 是一个对象，需要使用解构赋值来获取参数（花括号）
@@ -17,24 +17,31 @@ const WardDetail = ()=>{
     const {devices, ward} = useLoaderData();
 
     return(
-        <div>
-            {/*实施情况栏，显示各个设备*/}
-            <div  className="deviceStatus" style={{
-                width:"65rem",
-                height:"38rem",
-                borderRadius: "10px",
-                padding: "0.8rem",
-                background: "white",
-                display: "flex",
-                flexDirection: "column",
-
+        <div style={{
+            width: "100%",
+            height: "100%",
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gridGap: "2.5rem",
+        }}>
+            {/*左栏*/}
+            <div>
+                {/*实施情况栏，显示各个设备*/}
+                <div  className="deviceStatus" style={{
+                    width:"65rem",
+                    height:"38rem",
+                    borderRadius: "10px",
+                    padding: "0.5rem 1rem",
+                    background: "#ffffff",
+                    display: "flex",
+                    flexDirection: "column",
             }}>
                 <h2 style={{
-                    marginLeft: "1rem",
+                    marginLeft: "0.3rem",
                     marginBottom:"0.3rem",
                 }}>实时情况</h2>
 
-                {/*分割线*/}
+                    {/*分割线*/}
 
                 <hr style={{
                     width: "100%",
@@ -84,19 +91,22 @@ const WardDetail = ()=>{
                         </Empty>
                 }
 
+                </div>
             </div>
 
-            {/*今日情况栏*/}
-            <div id="todayState">
-                <h1>今日情况</h1>
-                <p>今日情况</p>
-                <h1>近一周进入卫生间次数</h1>
-
+            {/*右栏*/}
+            <div style={{
+                padding: "0",
+                margin: "0",
+            }}>
+                {/*今日情况栏*/}
+                <TodayStatus/>
             </div>
-            <Button>
-                <Link to={`/wards/${ward.wardId}/edit`}>Back to Wards</Link>
 
-            </Button>
+            {/*<Button>*/}
+            {/*    <Link to={`/wards/${ward.wardId}/edit`}>Back to Wards</Link>*/}
+
+            {/*</Button>*/}
 
             <Button><Link to={`/wards/${ward.wardId}/devices`}>设备管理</Link></Button>
 
