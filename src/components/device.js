@@ -1,8 +1,10 @@
 import React from 'react';
 import { SettingOutlined } from '@ant-design/icons';
 import {Avatar} from "antd";
+import {useNavigate} from "react-router-dom";
 
 const Device = ({device})=>{
+    const navigate = useNavigate();
     return(
         <div style={{
             width: '20rem',
@@ -32,22 +34,26 @@ const Device = ({device})=>{
                     fontWeight: 'bold',
                 }}>{device.deviceName}</span>
 
-                {/*TODO: 要么实现无边框按钮，要么实现onHover效果*/}
                 <div id="action" style={{
                     flex: 1,
                     marginRight: '0.5rem',
                     display: 'flex',
                     justifyContent: 'flex-end',
                 }}>
-                    <div
-                          style={{
+                    <span onClick={()=>{
+                        console.log('要实现跳转到设备日志界面')
+                    }} style={{
                         fontSize: '0.8rem',
                         color: '#ccc',
                         paddingInline: '0.5rem',
                         marginInline: '0.5rem',
                         borderRight: '1px solid #D7D7D7',
-                    }}>设备日志</div>
-                    <SettingOutlined />
+                    }}>设备日志</span>
+
+                    <SettingOutlined onClick={()=>{
+                        navigate(`./devices/${device.deviceId}`)
+                    }}/>
+
                 </div>
 
 

@@ -14,6 +14,8 @@ import ErrorPage from "./router/error-page";
 import {Provider, useDispatch} from "react-redux";
 import EditWard,{loaderGetter as wardLoaderGetter,actionGetter as editActionGetter} from "./router/edit";
 import Default from "./router/default";
+// import DeviceManage from "./router/deviceManage";
+import DeviceDetail,{loaderGetter as deviceLoaderGetter} from "./router/deviceDetail";
 import DeviceManage from "./router/deviceManage";
 
 
@@ -41,6 +43,14 @@ const Index = () =>{
                     loader: devicesLoaderGetter(store),
                 },
                 {
+                    //设备详情页
+                    path: "/wards/:wardId/devices/:deviceId",
+                    element: <DeviceDetail/>,
+                    errorElement:<ErrorPage />,
+                    loader: deviceLoaderGetter(store),
+                },
+                {
+                    //个人详情页
                     path: "/wards/:wardId/edit",
                     element: <EditWard/>,
                     errorElement:<ErrorPage />,
