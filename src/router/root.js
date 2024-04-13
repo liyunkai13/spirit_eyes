@@ -21,7 +21,7 @@ const Root = ()=> {
         <>
             <AddWardModal isOpen={open} parentCallback={handleCancel}/>
             <div id="sidebar">
-                <h1>React Router Contacts</h1>
+                <h1>Spirit Eyes</h1>
                 <div>
                     <form id="search-form" role="search">
                         <input

@@ -3,11 +3,11 @@ import {useLoaderData} from "react-router-dom";
 import {Button, Empty} from "antd";
 import Device from "../../components/device";
 import {PlusSquareOutlined} from "@ant-design/icons";
-import TodayStatus from "../../components/todayStatus";
 import {useSelector} from "react-redux";
 import {selectDevices} from "../../store/devicesSlice";
 import AddDeviceModal from "../../components/addDeviceModal";
 import {useState} from "react";
+import ActionRecord from "../../components/actionRecord";
 
 export const loaderGetter = () => async ({params}) => {
     return params.wardId;
@@ -16,7 +16,6 @@ export const loaderGetter = () => async ({params}) => {
 const WardPage = ()=>{
     const wardId = useLoaderData();
     const devices = useSelector(selectDevices).filter(device => device.wardId == wardId);
-
     const [open, setOpen] = useState(false);
     const showModal = () => {
         setOpen(true);
@@ -104,19 +103,10 @@ const WardPage = ()=>{
                 </div>
             </div>
 
-            {/*右栏*/}
-            <div style={{
-                padding: "0",
-                margin: "0",
-            }}>
-                {/*今日情况栏*/}
-                <TodayStatus/>
-            </div>
 
-            {/*<Button>*/}
-            {/*    <Link to={`/wards/${ward.wardId}/edit`}>Back to Wards</Link>*/}
+            {/*<TodayStatus/>*/}
+            <ActionRecord wardId = {wardId}/>
 
-            {/*</Button>*/}
 
 
 
