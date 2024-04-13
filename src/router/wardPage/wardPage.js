@@ -1,5 +1,5 @@
 // TODO ： 子组件：实时情况，今日情况，WardProfile入口,modelManage入口
-import {useLoaderData} from "react-router-dom";
+import {useLoaderData, useNavigate} from "react-router-dom";
 import {Button, Empty} from "antd";
 import Device from "../../components/device";
 import {PlusSquareOutlined} from "@ant-design/icons";
@@ -8,6 +8,7 @@ import {selectDevices} from "../../store/devicesSlice";
 import AddDeviceModal from "../../components/addDeviceModal";
 import {useState} from "react";
 import ActionRecord from "../../components/actionRecord";
+import EntranceReport from "../../components/entranceReport";
 
 export const loaderGetter = () => async ({params}) => {
     return params.wardId;
@@ -16,6 +17,7 @@ export const loaderGetter = () => async ({params}) => {
 const WardPage = ()=>{
     const wardId = useLoaderData();
     const devices = useSelector(selectDevices).filter(device => device.wardId == wardId);
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const showModal = () => {
         setOpen(true);
@@ -23,11 +25,12 @@ const WardPage = ()=>{
     const handleCancel = (isOpen) => {
         setOpen(isOpen);
     };
+    const navigateToReport = ()=>{
+        navigate(`./report`);
+    }
 
     return(
         <div style={{
-            width: "100%",
-            height: "100%",
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             gridGap: "2.5rem",
@@ -104,8 +107,9 @@ const WardPage = ()=>{
             </div>
 
 
-            {/*<TodayStatus/>*/}
             <ActionRecord wardId = {wardId}/>
+            <div>智能化异常行为报警</div>
+            <EntranceReport handleClick={navigateToReport}/>
 
 
 

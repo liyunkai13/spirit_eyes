@@ -16,6 +16,7 @@ import WardProfile,{loaderGetter as wardLoaderGetter,actionGetter as editActionG
 import Default from "./router/default";
 import DeviceSetting,{loaderGetter as deviceLoaderGetter} from "./router/wardPage/wardProfile/deviceSetting";
 import ModelManage from "./router/wardPage/wardProfile/modelManage";
+import DetailReport from "./router/wardPage/wardProfile/detailReport";
 
 
 const Index = () =>{
@@ -34,6 +35,20 @@ const Index = () =>{
                     loader: devicesLoaderGetter(),
                 },
                 {
+                    //详细报告页
+                    path: "/wards/:wardId/report",
+                    element:<DetailReport/>,
+                    errorElement:<ErrorPage />,
+                },
+                {
+                    //个人详情页
+                    path: "/wards/:wardId/ward_profile",
+                    element: <WardProfile/>,
+                    errorElement:<ErrorPage />,
+                    loader: wardLoaderGetter(store),
+                    action: editActionGetter(dispatch),
+                },
+                {
                     path: "/wards/:wardId/model_manage",
                     element: <ModelManage/>,
                     errorElement:<ErrorPage />,
@@ -45,14 +60,6 @@ const Index = () =>{
                     element: <DeviceSetting/>,
                     errorElement:<ErrorPage />,
                     loader: deviceLoaderGetter(store),
-                },
-                {
-                    //个人详情页
-                    path: "/wards/:wardId/ward_profile",
-                    element: <WardProfile/>,
-                    errorElement:<ErrorPage />,
-                    loader: wardLoaderGetter(store),
-                    action: editActionGetter(dispatch),
                 },
             ],
         },
