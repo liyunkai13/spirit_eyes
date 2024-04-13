@@ -1,9 +1,8 @@
-//TODO : 在这个逻辑中，save之后虽然可成功redux状态，但不会触发组件的重新渲染。现在的逻辑是用useState刷新组件,并没有在修改后重新从redux同步再刷新
 import React, {useState} from 'react';
-import {Button, Form, Input, InputNumber, Popconfirm, Table, Typography} from 'antd';
+import {Badge, Button, Form, Input, InputNumber, Popconfirm, Table, Typography} from 'antd';
 import {useLoaderData} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {deleteDevice, updateDevice} from "../store/devicesSlice";
+import {deleteDevice, updateDevice} from "../../../store/devicesSlice";
 
 const EditableCell = ({
                           editing,
@@ -41,7 +40,7 @@ const EditableCell = ({
 };
 
 
-const DeviceManage = () => {
+const ModelManage = () => {
     const {ward,devices} = useLoaderData();
 
     const dispatch = useDispatch();
@@ -100,6 +99,16 @@ const DeviceManage = () => {
             console.log('Validate Failed:', errInfo);
         }
     };
+    // const handleAdd = () => {
+    //     const newData = {
+    //         key: count,
+    //         name: `Edward King ${count}`,
+    //         age: '32',
+    //         address: `London, Park Lane no. ${count}`,
+    //     };
+    //     setDataSource([...dataSource, newData]);
+    //     setCount(count + 1);
+    // };
     const handleDelete = (key) => {
         const newData = devicesInForm.filter((device) => device.deviceId !== key);
         dispatch(deleteDevice(key));
@@ -125,6 +134,12 @@ const DeviceManage = () => {
             dataIndex: 'deviceStatus',
             width: '10%',
             editable: false,
+            render: (_, record) => {
+
+                return(
+                    <Badge status="error" text={record.deviceStatus} />
+                )
+            },
         },
         {
             title: 'Type',
@@ -231,4 +246,4 @@ const DeviceManage = () => {
     );
 };
 
-export default DeviceManage;
+export default ModelManage;

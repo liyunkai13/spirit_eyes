@@ -1,49 +1,25 @@
-import {Form, json, NavLink, Outlet, redirect, useLoaderData, useNavigation} from "react-router-dom";
-import {addWard} from "../store/wardsSlice";
+import {NavLink, Outlet, useNavigation} from "react-router-dom";
+import {selectWards} from "../store/wardsSlice";
 import Footer from "../components/footer";
+import AddWardModal from "../components/addWardModal";
+import {useState} from "react";
+import {useSelector} from "react-redux";
 
-export const loaderGetter = (store) => async () => {
-    return await store.getState().wards.value;
-
-};
-
-//用于初步创建一个ward对象，重定向到其edit界面
-export const actionGetter = (store) => async () => {
-    try {
-        //TODO: 从redux获取userId
-        const userId = 1;
-        const wardId = store.getState().wards.value.length + 1;
-        // console.log('newWard',{
-        //     userId: userId,
-        //     wardId: wardId,
-        //     wardName: "New Ward",
-        //     wardGender: "未知",
-        //     wardAge: 0,
-        //     emContact: "911",
-        //     notes: "This is a general ward"
-        // });
-        await store.dispatch(addWard({
-            userId: userId,
-            wardId: wardId,
-            wardName: "New Ward",
-            wardGender: "未知",
-            wardAge: 0,
-            emContact: "911",
-            notes: "This is a general ward"
-        }));
-        return redirect(`/wards/${wardId}/edit`);
-    } catch (e){
-        throw json({ message: "Error occurred while adding ward" }, { status: e.status });
-    }
-};
 const Root = ()=> {
     //mapStateToProps
-    const wards = useLoaderData();
+    const wards = useSelector(selectWards);
     const navigation = useNavigation();
-
+    const [open, setOpen] = useState(false);
+    const showModal = () => {
+        setOpen(true);
+    };
+    const handleCancel = (isOpen) => {
+        setOpen(isOpen);
+    };
 
     return (
         <>
+            <AddWardModal isOpen={open} parentCallback={handleCancel}/>
             <div id="sidebar">
                 <h1>React Router Contacts</h1>
                 <div>
@@ -65,9 +41,7 @@ const Root = ()=> {
                             aria-live="polite"
                         ></div>
                     </form>
-                    <Form method="post">
-                        <button type="submit">New</button>
-                    </Form>
+                    <button onClick={showModal} >New</button>
                 </div>
                 <nav>
                     <ul>

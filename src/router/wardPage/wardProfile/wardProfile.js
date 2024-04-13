@@ -1,7 +1,6 @@
+// TODO ：子组件：基本信息管理，应急联系人管理，设备管理，
 import {Form, redirect, useLoaderData, useNavigate} from "react-router-dom";
-import {updateWard} from "../store/wardsSlice";
-
-
+import {updateWard} from "../../../store/wardsSlice";
 export const loaderGetter = (store) => ({params}) => {
     try {
         const  wards = store.getState().wards.value;
@@ -36,7 +35,7 @@ export const actionGetter = (dispatch) => async ({request,params}) => {
 };
 
 // 有两种方案实现用Form实现信息修改，一种是原生Form和useState，另一种是使用react-router-dom的action和封装的Form，这里使用react-router-dom的Form
-export default function EditWard() {
+export default function WardProfile() {
     const ward = useLoaderData();
     const navigate = useNavigate();
 

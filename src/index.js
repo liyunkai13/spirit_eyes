@@ -8,15 +8,14 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import store from "./store/store";
-import Root,{loaderGetter as wardsLoaderGetter,actionGetter as newWardActionGetter } from "./router/root";
-import WardDetail,{loaderGetter as devicesLoaderGetter} from "./router/wardDetail";
+import Root from "./router/root";
+import WardPage,{loaderGetter as devicesLoaderGetter} from "./router/wardPage/wardPage";
 import ErrorPage from "./router/error-page";
 import {Provider, useDispatch} from "react-redux";
-import EditWard,{loaderGetter as wardLoaderGetter,actionGetter as editActionGetter} from "./router/edit";
+import WardProfile,{loaderGetter as wardLoaderGetter,actionGetter as editActionGetter} from "./router/wardPage/wardProfile/wardProfile";
 import Default from "./router/default";
-// import DeviceManage from "./router/deviceManage";
-import DeviceDetail,{loaderGetter as deviceLoaderGetter} from "./router/deviceDetail";
-import DeviceManage from "./router/deviceManage";
+import DeviceSetting,{loaderGetter as deviceLoaderGetter} from "./router/wardPage/wardProfile/deviceSetting";
+import ModelManage from "./router/wardPage/wardProfile/modelManage";
 
 
 const Index = () =>{
@@ -26,33 +25,31 @@ const Index = () =>{
             path: "/",
             element: <Root/>,
             errorElement:<ErrorPage />,
-            loader: wardsLoaderGetter(store),
-            action: newWardActionGetter(store),
             children: [
                 { index: true, element: <Default/> },
                 {
                     path: "/wards/:wardId",
-                    element: <WardDetail/>,
+                    element: <WardPage/>,
                     errorElement:<ErrorPage />,
-                    loader: devicesLoaderGetter(store),
+                    loader: devicesLoaderGetter(),
                 },
                 {
-                    path: "/wards/:wardId/devices",
-                    element: <DeviceManage/>,
+                    path: "/wards/:wardId/model_manage",
+                    element: <ModelManage/>,
                     errorElement:<ErrorPage />,
-                    loader: devicesLoaderGetter(store),
+                    loader: devicesLoaderGetter(),
                 },
                 {
-                    //设备详情页
+                    //设备设置和详情页
                     path: "/wards/:wardId/devices/:deviceId",
-                    element: <DeviceDetail/>,
+                    element: <DeviceSetting/>,
                     errorElement:<ErrorPage />,
                     loader: deviceLoaderGetter(store),
                 },
                 {
                     //个人详情页
-                    path: "/wards/:wardId/edit",
-                    element: <EditWard/>,
+                    path: "/wards/:wardId/ward_profile",
+                    element: <WardProfile/>,
                     errorElement:<ErrorPage />,
                     loader: wardLoaderGetter(store),
                     action: editActionGetter(dispatch),

@@ -9,7 +9,7 @@ export const loaderGetter = (store) => async ({params}) => {
     return {device,ward};
 };
 // TODO : 设备详情界面待实现
-const DeviceDetail =()=>{
+const DeviceSetting =()=>{
     const {device, ward} = useLoaderData();
     // console.log(device);
     return(
@@ -18,10 +18,10 @@ const DeviceDetail =()=>{
             height: "100%",
             backgroundColor: "#494848",
         }}>
-            <h1>Device Detail</h1>
+            <h1>Device Setting</h1>
             <h2>Device ID: {device.deviceId}</h2>
             <h2>Device Name: {device.deviceName}</h2>
         </div>
     )
 }
-export default DeviceDetail;
+export default DeviceSetting;

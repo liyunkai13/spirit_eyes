@@ -1,20 +1,29 @@
-import {Link, useLoaderData} from "react-router-dom";
+// TODO ： 子组件：实时情况，今日情况，WardProfile入口,modelManage入口
+import {useLoaderData} from "react-router-dom";
 import {Button, Empty} from "antd";
-import Device from "../components/device";
+import Device from "../../components/device";
 import {PlusSquareOutlined} from "@ant-design/icons";
-import TodayStatus from "../components/todayStatus";
+import TodayStatus from "../../components/todayStatus";
+import {useSelector} from "react-redux";
+import {selectDevices} from "../../store/devicesSlice";
+import AddDeviceModal from "../../components/addDeviceModal";
+import {useState} from "react";
 
-
-// params 是一个对象，需要使用解构赋值来获取参数（花括号）
-export const loaderGetter = (store) => async ({params}) => {
-
-    //千万不能使用===，我们这里只需要比较值是否相等，不需要比较类型，别看黄色警告
-    const devices = await store.getState().devices.value.filter(device => device.wardId == params.wardId);
-    const ward = await store.getState().wards.value.find(ward => ward.wardId == params.wardId);
-    return {devices, ward};
+export const loaderGetter = () => async ({params}) => {
+    return params.wardId;
 };
-const WardDetail = ()=>{
-    const {devices, ward} = useLoaderData();
+
+const WardPage = ()=>{
+    const wardId = useLoaderData();
+    const devices = useSelector(selectDevices).filter(device => device.wardId == wardId);
+
+    const [open, setOpen] = useState(false);
+    const showModal = () => {
+        setOpen(true);
+    };
+    const handleCancel = (isOpen) => {
+        setOpen(isOpen);
+    };
 
     return(
         <div style={{
@@ -24,6 +33,7 @@ const WardDetail = ()=>{
             gridTemplateColumns: "1fr 1fr",
             gridGap: "2.5rem",
         }}>
+            <AddDeviceModal wardId={wardId} isOpen={open} parentCallback={handleCancel}/>
             {/*左栏*/}
             <div>
                 {/*实施情况栏，显示各个设备*/}
@@ -74,7 +84,7 @@ const WardDetail = ()=>{
                                 <PlusSquareOutlined style={{
                                     fontSize:'5rem',
                                     color: '#D7D7D7',
-                                }} onClick={()=>{}}/>
+                                }} onClick={showModal}/>
                             </div>
 
                         </div>:
@@ -87,7 +97,7 @@ const WardDetail = ()=>{
                                 <span>There is no device</span>
                             }
                         >
-                            <Button type="primary" onClick={()=>{}}>Create Now</Button>
+                            <Button type="primary" onClick={showModal}>Create Now</Button>
                         </Empty>
                 }
 
@@ -108,9 +118,9 @@ const WardDetail = ()=>{
 
             {/*</Button>*/}
 
-            <Button><Link to={`/wards/${ward.wardId}/devices`}>设备管理</Link></Button>
+
 
         </div>
     )
 }
-export default WardDetail;
+export default WardPage;
